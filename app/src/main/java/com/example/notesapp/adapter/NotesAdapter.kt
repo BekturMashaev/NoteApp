@@ -1,12 +1,19 @@
-package com.example.notesapp
+package com.example.notesapp.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.notesapp.R
 import com.example.notesapp.databinding.NotesItemBinding
+import com.example.notesapp.model.NotesModel
 
-class NotesAdapter : RecyclerView.Adapter<NotesAdapter.NotesViewHolder>() {
+class NotesAdapter(
+    private val onDeleteNoteClick: (index: Int) -> Unit
+) : RecyclerView.Adapter<NotesAdapter.NotesViewHolder>() {
     val notesList = mutableListOf<NotesModel>()
+
+    @SuppressLint("NotifyDataSetChanged")
     fun updateList(notesList: List<NotesModel>) {
         this.notesList.clear()
         this.notesList.addAll(notesList)
@@ -19,6 +26,9 @@ class NotesAdapter : RecyclerView.Adapter<NotesAdapter.NotesViewHolder>() {
         fun bind(notesModel: NotesModel) {
             binding.tnNotesTitle.text = notesModel.notesTitle
             binding.tnNotesDescription.text = notesModel.notesDescription
+            binding.deletteBtn.setOnClickListener {
+                onDeleteNoteClick.invoke(notesList.indexOf(notesModel))
+            }
         }
     }
 
@@ -35,5 +45,7 @@ class NotesAdapter : RecyclerView.Adapter<NotesAdapter.NotesViewHolder>() {
 
     override fun onBindViewHolder(holder: NotesViewHolder, position: Int) {
         holder.bind(notesList[position])
+        holder.itemView.setOnClickListener {
+        }
     }
 }

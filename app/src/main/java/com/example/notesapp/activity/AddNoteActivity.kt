@@ -1,9 +1,12 @@
-package com.example.notesapp
+package com.example.notesapp.activity
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.example.notesapp.R
+import com.example.notesapp.database.NotesDatabase
 import com.example.notesapp.databinding.ActivityAddNoteBinding
+import com.example.notesapp.model.NotesModel
 import com.google.android.material.snackbar.Snackbar
 
 class AddNoteActivity : AppCompatActivity() {
@@ -16,12 +19,17 @@ class AddNoteActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_add_note)
+        setContentView(binding.root)
+        binding.saveCard.setOnClickListener {
+            saveNotes()
+        }
+        binding.backCard.setOnClickListener {
+            finish()
+        }
     }
 
     private fun saveNotes() = binding.apply {
         if (titleEt.text?.isNotEmpty() == true && descriptionEt.text?.isNotEmpty() == true) {
-            showToastManager("ваша машина сохранена")
             sharedPref.saveNotes(
                 NotesModel(
                     notesTitle = binding.titleEt.text.toString(),
@@ -29,7 +37,7 @@ class AddNoteActivity : AppCompatActivity() {
                 )
             )
             startActivity(Intent(this@AddNoteActivity, MainActivity::class.java))
-        } else showToastManager("не должны быть пустыми")
+        } else showToastManager(getString(R.string.not_empty_fields))
     }
 
     private fun showToastManager(massage: String) {

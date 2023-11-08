@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name">Notes app</string>
-    <string name="notes">Notes</string>
-    <string name="title">Title</string>
-    <string name="type_smth">Type something...</string>
+    <string name="notes">Заметки</string>
+    <string name="title">Заглавие</string>
+    <string name="type_something">Напишите что нибудь..</string>
+    <string name="not_empty_fields">Поля не должны быть пустыми!</string>
+    <string name="already_empty_field">У вас нет заметок чтобы удалить!</string>
+    <string name="really_want_to_delete">Вы точно хотите удалить всё?</string>
+    <string name="no">Нет</string>
+    <string name="yes">Да</string>
 </resources>

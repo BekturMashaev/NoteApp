@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black_background"
-    tools:context=".MainActivity">
+    tools:context=".activity.MainActivity">
 
     <LinearLayout
         android:id="@+id/panelLl"
@@ -24,7 +24,7 @@
             android:fontFamily="@font/nunito_bold"
             android:text="@string/notes"
             android:textColor="@color/white"
-            android:textSize="44sp" />
+            android:textSize="40sp" />
 
         <androidx.cardview.widget.CardView
             android:layout_width="50dp"
@@ -51,36 +51,39 @@
             app:cardCornerRadius="15dp">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_gravity="center"
-                android:src="@drawable/group" />
+                android:src="@drawable/delete_icon" />
         </androidx.cardview.widget.CardView>
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/itemsRv"
+        android:id="@+id/notesRv"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:orientation="vertical"
+        android:visibility="gone"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/panelLl" />
+        app:layout_constraintTop_toBottomOf="@+id/panelLl"
+        tools:listitem="@layout/notes_item" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/emptyImg"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:padding="40dp"
         android:src="@drawable/background_picture"
-        app:layout_constraintBottom_toTopOf="@id/addFBtn"
+        app:layout_constraintBottom_toTopOf="@id/addNoteFbtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/panelLl" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/addFBtn"
+        android:id="@+id/addNoteFbtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="30dp"
@@ -89,10 +92,7 @@
         android:src="@drawable/add"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:tint="@color/white"/>
-
-
-
+        app:tint="@color/white" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

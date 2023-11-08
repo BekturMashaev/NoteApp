@@ -5,22 +5,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black_background"
-    tools:context=".AddNoteActivity">
+    tools:context=".activity.AddNoteActivity">
+
     <LinearLayout
         android:id="@+id/panelLl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_margin="6dp"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
         <FrameLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:layout_weight="1">
+
             <androidx.cardview.widget.CardView
+                android:id="@+id/backCard"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_gravity="start"
@@ -55,6 +59,7 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/saveCard"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="center"
@@ -88,7 +93,7 @@
         android:layout_height="0dp"
         android:fontFamily="@font/nunito_extralight"
         android:gravity="top"
-        android:hint="@string/type_smth"
+        android:hint="@string/type_something"
         android:paddingStart="24dp"
         android:textColorHint="@color/light_grey_for_txt"
         android:textSize="34sp"

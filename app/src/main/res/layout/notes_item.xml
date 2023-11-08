@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        app:cardCornerRadius="22dp"
         android:layout_height="wrap_content"
         android:layout_margin="18dp"
-        app:cardBackgroundColor="@color/light_grey_for_txt"
+        app:cardBackgroundColor="@color/grey_background"
+        app:cardCornerRadius="22dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
@@ -21,27 +21,43 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/tnNotesTitle"
-                android:layout_width="match_parent"
-                android:gravity="center"
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="12dp"
-                android:textColor="@color/white"
-                android:fontFamily="@font/nunito_bold"
-                android:textSize="22sp"
-                tools:text="Note Title" />
+                android:layout_weight="1"
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tnNotesDescription"
-                android:layout_width="match_parent"
-                android:layout_marginBottom="22dp"
-                android:layout_marginStart="22dp"
-                android:layout_marginEnd="22dp"
-                android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:textSize="22sp"
-                tools:text="Note Title" />
+                <TextView
+                    android:id="@+id/tnNotesTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="14dp"
+                    android:fontFamily="@font/nunito_bold"
+                    android:maxLines="3"
+                    android:textColor="@color/white"
+                    android:textSize="22sp"
+                    tools:text="Note Title" />
+
+                <TextView
+                    android:id="@+id/tnNotesDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="22dp"
+                    android:layout_marginEnd="22dp"
+                    android:layout_marginBottom="22dp"
+                    android:maxLines="4"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    tools:text="Note Description" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/deletteBtn"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:layout_marginEnd="20dp"
+                android:src="@drawable/delete_icon" />
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
