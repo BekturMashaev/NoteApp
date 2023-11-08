@@ -58,10 +58,6 @@ class MainActivity : AppCompatActivity() {
             Snackbar.LENGTH_SHORT,
         ).show()
 
-
-
-
-
     }
 
     private fun setUpViewsAndAdapter() {
