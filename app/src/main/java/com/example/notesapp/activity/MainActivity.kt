@@ -46,23 +46,22 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    private fun setUpClickListener() {
-        binding.addNoteFbtn.setOnClickListener {
+    private fun setUpClickListener() = binding.apply {
+        addNoteFbtn.setOnClickListener {
             startActivity(Intent(this@MainActivity, AddNoteActivity::class.java))
         }
-        binding.deleteCard.setOnClickListener {
-            val lisOfNotes = sharedPref.getAllNotes()
-            if (lisOfNotes.isNotEmpty()) {
-                showConfirmDialog()
-            } else showToastManager(getString(R.string.already_empty_field))
+        deleteCard.setOnClickListener {
+            val listOfNotes = sharedPref.getAllNotes()
+            if (listOfNotes.isNotEmpty()) showConfirmDialog()
+            else showToastManager(getString(R.string.already_empty_field))
         }
     }
 
     private fun deleteAllNotes() {
         sharedPref.deleteAllNotes()
         adapter.updateList(emptyList())
-        binding.emptyImg.visibility = View.VISIBLE
         binding.notesRv.visibility = View.GONE
+        binding.emptyImg.visibility = View.VISIBLE
     }
 
     private fun showConfirmDialog() {
