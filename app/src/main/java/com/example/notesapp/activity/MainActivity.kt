@@ -22,7 +22,8 @@ class MainActivity : AppCompatActivity() {
         NotesAdapter(onDeleteNoteClick = { index ->
             sharedPref.deleteNoteByIndex(index)
             setUpViewsAndAdapter()
-        })
+        }
+        )
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,19 +31,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         setUpViewsAndAdapter()
         setUpClickListener()
-    }
-
-    private fun setUpViewsAndAdapter() {
-        val lisOfNotes = sharedPref.getAllNotes()
-        if (lisOfNotes.isNotEmpty()) {
-            binding.emptyImg.visibility = View.GONE
-            binding.notesRv.visibility = View.VISIBLE
-            adapter.updateList(lisOfNotes)
-            binding.notesRv.adapter = adapter
-        } else {
-            binding.emptyImg.visibility = View.VISIBLE
-            binding.notesRv.visibility = View.GONE
-        }
     }
 
 
@@ -57,12 +45,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun deleteAllNotes() {
-        sharedPref.deleteAllNotes()
-        adapter.updateList(emptyList())
-        binding.notesRv.visibility = View.GONE
-        binding.emptyImg.visibility = View.VISIBLE
-    }
 
     private fun showConfirmDialog() {
         val alterDialog = MaterialAlertDialogBuilder(this)
@@ -83,5 +65,22 @@ class MainActivity : AppCompatActivity() {
             massage,
             Snackbar.LENGTH_SHORT,
         ).show()
+    }
+
+    private fun setUpViewsAndAdapter() {
+        val lisOfNotes = sharedPref.getAllNotes()
+        if (lisOfNotes.isNotEmpty()) {
+            binding.emptyImg.visibility = View.GONE
+            binding.notesRv.visibility = View.VISIBLE
+            adapter.updateList(lisOfNotes)
+            binding.notesRv.adapter = adapter
+        }
+    }
+
+    private fun deleteAllNotes() {
+        sharedPref.deleteAllNotes()
+        adapter.updateList(emptyList())
+        binding.emptyImg.visibility = View.GONE
+        binding.notesRv.visibility = View.VISIBLE
     }
 }
