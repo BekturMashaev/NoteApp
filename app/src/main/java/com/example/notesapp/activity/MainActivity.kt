@@ -4,10 +4,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import com.example.notesapp.R
 import com.example.notesapp.adapter.NotesAdapter
 import com.example.notesapp.database.NotesDatabase
 import com.example.notesapp.databinding.ActivityMainBinding
+import com.example.notesapp.model.NotesModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 
@@ -24,25 +26,13 @@ class MainActivity : AppCompatActivity() {
             setUpViewsAndAdapter()
         })
     }
+    private var notesList: List<NotesModel> = emptyList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         setUpViewsAndAdapter()
         setUpClickListener()
-    }
-
-    private fun setUpViewsAndAdapter() {
-        val lisOfNotes = sharedPref.getAllNotes()
-        if (lisOfNotes.isNotEmpty()) {
-            binding.emptyImg.visibility = View.GONE
-            binding.notesRv.visibility = View.VISIBLE
-            adapter.updateList(lisOfNotes)
-            binding.notesRv.adapter = adapter
-        } else {
-            binding.emptyImg.visibility = View.VISIBLE
-            binding.notesRv.visibility = View.GONE
-        }
     }
 
 
@@ -55,14 +45,23 @@ class MainActivity : AppCompatActivity() {
             if (listOfNotes.isNotEmpty()) showConfirmDialog()
             else showToastManager(getString(R.string.already_empty_field))
         }
+        notesSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                newText?.let {
+                    filterN0tes(it)
+                }
+                // как вариант
+//                filterN0tes(newText ?:"")
+                return true
+            }
+
+        })
     }
 
-    private fun deleteAllNotes() {
-        sharedPref.deleteAllNotes()
-        adapter.updateList(emptyList())
-        binding.notesRv.visibility = View.GONE
-        binding.emptyImg.visibility = View.VISIBLE
-    }
 
     private fun showConfirmDialog() {
         val alterDialog = MaterialAlertDialogBuilder(this)
@@ -83,5 +82,30 @@ class MainActivity : AppCompatActivity() {
             massage,
             Snackbar.LENGTH_SHORT,
         ).show()
+    }
+
+    private fun setUpViewsAndAdapter() {
+        val lisOfNotes = sharedPref.getAllNotes()
+        if (lisOfNotes.isNotEmpty()) {
+            notesList = lisOfNotes
+            binding.emptyImg.visibility = View.GONE
+            binding.notesRv.visibility = View.VISIBLE
+            adapter.updateList(lisOfNotes)
+            binding.notesRv.adapter = adapter
+        }
+    }
+
+    private fun filterN0tes(title: String) {
+        val filterNote = notesList.filter { name ->
+            name.notesTitle.contains(title, ignoreCase = true)
+        }
+        adapter.updateList(filterNote)
+    }
+
+    private fun deleteAllNotes() {
+        sharedPref.deleteAllNotes()
+        adapter.updateList(emptyList())
+        binding.emptyImg.visibility = View.GONE
+        binding.notesRv.visibility = View.VISIBLE
     }
 }
