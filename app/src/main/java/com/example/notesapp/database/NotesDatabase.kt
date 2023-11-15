@@ -10,7 +10,7 @@ const val SHARED_PREFERENCES_KEY = "SHARED_PREFERENCES_KEY"
 const val SHARED_PREF = "Notes_SHARED_PREF"
 
 class NotesDatabase(
-    private val context: Context,
+    context: Context,
 ) {
     private val sharedPreferences = context.getSharedPreferences(
         SHARED_PREFERENCES_KEY, Context.MODE_PRIVATE
@@ -30,7 +30,13 @@ class NotesDatabase(
         val notesGson = Gson().toJson(notes)
         sharedPreferences.edit().putString(SHARED_PREF, notesGson).apply()
     }
-
+    fun updateNotes(notesModel: NotesModel){
+        val notes = getAllNotes().toMutableList()
+        notes.removeIf { notesModel.notesId==it.notesId }
+        notes.add(0, notesModel)
+        val notesGson = Gson().toJson(notes)
+        sharedPreferences.edit().putString(SHARED_PREF, notesGson).apply()
+    }
     fun deleteAllNotes() {
         sharedPreferences.edit().clear().apply()
     }

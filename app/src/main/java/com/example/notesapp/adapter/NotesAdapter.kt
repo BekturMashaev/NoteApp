@@ -9,7 +9,8 @@ import com.example.notesapp.databinding.NotesItemBinding
 import com.example.notesapp.model.NotesModel
 
 class NotesAdapter(
-    private val onDeleteNoteClick: (index: Int) -> Unit
+    private val onDeleteNoteClick: (index: Int) -> Unit,
+    private val reportToDetails:(notes:NotesModel)->Unit
 ) : RecyclerView.Adapter<NotesAdapter.NotesViewHolder>() {
     val notesList = mutableListOf<NotesModel>()
 
@@ -28,6 +29,9 @@ class NotesAdapter(
             binding.tnNotesDescription.text = notesModel.notesDescription
             binding.deletteBtn.setOnClickListener {
                 onDeleteNoteClick.invoke(notesList.indexOf(notesModel))
+            }
+            binding.nameCv.setOnClickListener{
+                reportToDetails.invoke(notesModel)
             }
         }
     }

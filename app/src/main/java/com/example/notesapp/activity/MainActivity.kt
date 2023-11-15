@@ -24,6 +24,8 @@ class MainActivity : AppCompatActivity() {
         NotesAdapter(onDeleteNoteClick = { index ->
             sharedPref.deleteNoteByIndex(index)
             setUpViewsAndAdapter()
+        }, reportToDetails = { notesModel ->
+            navigateToDetails(notesModel = notesModel)
         })
     }
     private var notesList: List<NotesModel> = emptyList()
@@ -87,25 +89,34 @@ class MainActivity : AppCompatActivity() {
     private fun setUpViewsAndAdapter() {
         val lisOfNotes = sharedPref.getAllNotes()
         if (lisOfNotes.isNotEmpty()) {
-            notesList = lisOfNotes
             binding.emptyImg.visibility = View.GONE
             binding.notesRv.visibility = View.VISIBLE
-            adapter.updateList(lisOfNotes)
-            binding.notesRv.adapter = adapter
+        }else {
+            binding.emptyImg.visibility = View.GONE
+            binding.notesRv.visibility = View.VISIBLE
         }
+        adapter.updateList(lisOfNotes)
+        binding.notesRv.adapter = adapter
     }
 
+    private fun navigateToDetails(notesModel: NotesModel) {
+        val intent = Intent(this, AddNoteActivity::class.java)
+        intent.putExtra(NAVIGATE_TO_DETAILS, notesModel)
+        startActivity(intent)
+    }
     private fun filterN0tes(title: String) {
         val filterNote = notesList.filter { name ->
             name.notesTitle.contains(title, ignoreCase = true)
         }
         adapter.updateList(filterNote)
     }
-
     private fun deleteAllNotes() {
         sharedPref.deleteAllNotes()
         adapter.updateList(emptyList())
         binding.emptyImg.visibility = View.GONE
         binding.notesRv.visibility = View.VISIBLE
+    }
+    companion object {
+        const val NAVIGATE_TO_DETAILS = "NAVIGATE_TO_DETAILS"
     }
 }
